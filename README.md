@@ -1,6 +1,12 @@
 # Using --mount=type=cache with package managers
 link to the official docker docs:  
 https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/syntax.md  
+## General requirements for using the --mount=type=cache command:  
+1) You can't bulid Dockerfile without using docker buildkit.  
+2) You need to make sure that cache usage is enabled in the application you want to cache.  
+3) You need to know the folder where the application cache is stored.  
+4) A cache that is mounted on the same path (target) will be common to all docker images. If you need to fix this, use the additional options from the documentation.  
+
 ## composer  
 Get cache path:  
 ```
@@ -61,3 +67,16 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloa
 RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
   apt update && apt-get --no-install-recommends install -y gcc
 ```
+
+## how to build docker images with using buildkit:  
+link to the official docker docs:  
+https://docs.docker.com/develop/develop-images/build_enhancements/  
+docker build example:  
+```
+DOCKER_BUILDKIT=1 docker build .
+```
+docker-compose build example:  
+```
+DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker-compose build
+```
+Note that docker-compose can use buildkit only from 1.25.0 version or higher.  
