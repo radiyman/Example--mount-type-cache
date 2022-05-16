@@ -1,7 +1,19 @@
-# Using --mount=type=cache with package managers
-link to the official docker docs:  
+# Using --mount=type=cache with package managers  
+Using --mount = type = cache allows you to save cache with downloaded packages for package managers, which saves time spent on downloading packages. 
+
+Link to the official docker docs:  
 https://github.com/moby/buildkit/blob/master/frontend/dockerfile/docs/syntax.md  
-## General requirements for using the --mount=type=cache command:  
+
+Table of contents:  
+[General-requirements](#General-requirements)  
+[composer](#composer)  
+[npm](#npm)  
+[pip](#pip)  
+[apt](#apt)  
+[yarn](#yarn)  
+[how-to-build-docker-images-with-using-buildkit](#how-to-build-docker-images-with-using-buildkit)  
+
+## General requirements  
 1) You can't bulid Dockerfile without using docker buildkit.  
 2) You need to make sure that cache usage is enabled in the application you want to cache.  
 3) You need to know the folder where the application cache is stored.  
@@ -84,7 +96,7 @@ WORKDIR /usr/src/app
 COPY package.json yarn.lock /usr/src/app
 RUN  yarn install --pure-lockfile
 ```
-## how to build docker images with using buildkit:  
+## how to build docker images with using buildkit  
 link to the official docker docs:  
 https://docs.docker.com/develop/develop-images/build_enhancements/  
 docker build example:  
