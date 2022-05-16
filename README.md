@@ -67,7 +67,23 @@ RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloa
 RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
   apt update && apt-get --no-install-recommends install -y gcc
 ```
-
+## yarn  
+Yarn is configured to use a local cache by default. This is done to make it easier for you to store it as part of your repository.  
+Before using --mount=type=cache, you need to switch yarn to use the global cache.  
+link to the official yarn docs:  
+https://yarnpkg.com/features/offline-cache  
+Get cache path:  
+```
+yarn cache dir
+```
+example:  
+```
+# syntax = docker/dockerfile:1.3
+FROM node
+WORKDIR /usr/src/app
+COPY package.json yarn.lock /usr/src/app
+RUN  yarn install --pure-lockfile
+```
 ## how to build docker images with using buildkit:  
 link to the official docker docs:  
 https://docs.docker.com/develop/develop-images/build_enhancements/  
